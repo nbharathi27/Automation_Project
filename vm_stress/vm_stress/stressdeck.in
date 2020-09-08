@@ -1,0 +1,46 @@
+[root@CentOS67-VM ~]# vi  /input_decks/stressdeck.in 
+
+stop_it -options "-t 994h" -user_count 1 -iterations 1
+
+# UPDATED: 7/28/2015 BY Mike D
+# LST Driver Deck  # This text helps ID deck type for automation.
+
+# Sample vm_stress.in for Linux VMs
+
+# This sample defaults to moderate load.
+
+# Monitor for CPU ACCESS DELAYs...
+timeit -options '' -user_count 1 -iterations 999
+
+# -------- CPU Stress --------
+# Default:  NOTE: Recommend using cpustress instead as recursive old and out dated!
+
+# recursive_64 -options '-d 20000 -i 1000000 -m -f -s 0 ' -user_count 1 -iterations 999
+# Lower/moderate CPU load...
+# recursive_64 -options '-d 2000 -i 10000 -m -f -s 0 ' -user_count 1 -iterations 999
+
+# New cpustress test for higher stress level if/when needed...
+cpustress_64 -options '-threads 4 -thread_sleep_time 4400 -run_time 60 '-user_count 1 -iterations 999
+
+# -------- Memory --------
+#memory_test_64 -options '-pct_of_memory 80 -iterations 1 -serial -sleep_time 1' -user_count 1 -iterations 999
+# Moderate level 64 bit...
+memory_test_64 -options '-pct_of_memory 30 -iterations 1 -serial -sleep_time 10' -user_count 1 -iterations 999
+
+# -------- Disk Test ---------
+disk_test_64 -options '-file_size 100' -user_count 1 -iterations 999 -dir /home
+
+# -------- TCP Test --------
+
+# TCP 1  10.5.0.0 Common Test Network (CTN)
+# tcp_test_64 -options '-reply_to_each_packet -port_no 8000 -hostname 10.5.xx.xx -fixed_packet_size 5000 -number_of_packets 25000 -client_ip 10.5.xx.xx -number_of_clients 5 -sleep_time 5' -user_count 1 -iterations 999
+
+# TCP 2 Varying packets on the VM Test Net...
+# tcp_test_64 -options '-no_fixed_packet -varying_packet_size 7 -hostname 192.168.68.xx -number_of_clients 5 -client_ip 192.168.68.xx -port_no 8500' -user_count 1 -iterations 999
+
+# -------- FTP ---------
+#ftp_test  -options "-h 10.5.xx.xx -t 680 -u ftpclient -p ftpclient" -user_count 5 -iterations 999
+
+# -------- Apache --------
+#apache_pdf  -options "-h 134.111.xx.xx -t 900 " -user_count 2 -iterations 999
+~                                                                                     
