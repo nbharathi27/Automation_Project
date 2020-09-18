@@ -1,0 +1,610 @@
+
+C:\Users\bnunna\Desktop\Training keyinfo\esx_atomation>python updated_vm_deploy.py
+connect to given host
+Connect to host : 192.168.61.222
+with entered User Name root
+and with entered Password syseng01!
+Successfully connected to the host 192.168.61.222
+Connect to host : 192.168.61.223
+with entered User Name root
+and with entered Password syseng
+Successfully connected to the host 192.168.61.223
+Get esx temp path
+Host ESX Version is 6.7.0 , VM template path is /ESX-VMTemplates/ESX6
+Get existing VM-data configuration
+ignoring appliance datastore
+Datastore Map is {}
+Unregistering VMs
+ignoring appliance datastore
+existing vms are []
+getting existing datastores
+Data store Volume list is :['datastore2', 'MPM1']
+existing Data store are ['datastore2', 'MPM1']
+cleaning VM images in all datastores
+executing the below command
+rm -rf "/vmfs/volumes/MPM1"/*
+output after deleting vm files of datastore
+
+creating new datastores if possible
+Check if mpm to be created
+Connect to host : 192.168.61.223
+with entered User Name root
+and with entered Password syseng
+Successfully connected to the host 192.168.61.223
+Last login: Fri Sep 11 18:08:56 2020 from nunna-b.invpn.stratus.com
+[root@dhcp-192-168-61-223 ~]# /opt/ft/sbin/mpm_assist
+
+
+ Storage Enclosures
+|-------------------------------------------------------------------------------|
+| Enclosure 10/40                                                               |
+|-------------------------------------------------------------------------------|
+|  10/40/1   mpm0   |  10/40/3   mpm2   |  10/40/5          |  10/40/7          |
+|  10/40/2   mpm1   |  10/40/4          |  10/40/6          |  10/40/8          |
+|-------------------------------------------------------------------------------|
+| Enclosure 11/40                                                               |
+|-------------------------------------------------------------------------------|
+|  11/40/1   mpm0   |  11/40/3   mpm2   |  11/40/5          |  11/40/7          |
+|  11/40/2   mpm1   |  11/40/4          |  11/40/6          |  11/40/8          |
+|-------------------------------------------------------------------------------|
+
+
+ No available disks found, exiting.
+[root@dhcp-192-168-61-223 ~]#
+output is
+[root@dhcp-192-168-61-223 ~]#
+getting existing datastores
+Data store Volume list is :['datastore2', 'MPM1']
+existing Data store are ['datastore2', 'MPM1']
+getting data datastores
+actual data datastores are ['MPM1']
+getting existing configuration
+ignoring appliance datastore
+Datastore Map is {}
+ignoring appliance datastore
+existing vms are []
+Disk cleaning is done successfully , proceed for network configuration
+Check if any vswitch configuration exists other than management network
+execute comamnd to get availble vswitches
+Available switch config is Switch Name      Num Ports   Used Ports  Configured Ports  MTU     Uplinks
+vSwitch0         2560        7           128               1500    vmnic_100600,vmnic_110600
+
+  PortGroup Name        VLAN ID  Used Ports  Uplinks
+  VM Network            0        1           vmnic_100600,vmnic_110600
+  Management Network    0        1           vmnic_100600,vmnic_110600
+
+Switch Name      Num Ports   Used Ports  Configured Ports  MTU     Uplinks
+cust_vSwitch1    2560        5           128               1500    vmnic_100601,vmnic_110601
+
+  PortGroup Name        VLAN ID  Used Ports  Uplinks
+  CustVM_PGrp           0        0           vmnic_100601,vmnic_110601
+
+
+---------------------------------------------
+Do not delete default switch: vSwitch0
+---------------------------------------------
+Found a port group CustVM_PGrp with default_uplinks vmnic_100601,vmnic_110601
+Delete port groups of non-default switch: cust_vSwitch1
+Delete port group : CustVM_PGrp
+execute clear commands to delete CustVM_PGrp
+Delete non-default switch: cust_vSwitch1
+---------------------------------------------
+Switch Name      Num Ports   Used Ports  Configured Ports  MTU     Uplinks
+vSwitch0         2560        7           128               1500    vmnic_100600,vmnic_110600
+
+  PortGroup Name        VLAN ID  Used Ports  Uplinks
+  VM Network            0        1           vmnic_100600,vmnic_110600
+  Management Network    0        1           vmnic_100600,vmnic_110600
+
+
+Successfully deleted switch: cust_vSwitch1
+Create vswitch cust_vSwitch1
+Create portgroup and add to vswitch cust_vSwitch1
+
+
+Verify new switch created successfully
+Switch Name      Num Ports   Used Ports  Configured Ports  MTU     Uplinks
+vSwitch0         2560        7           128               1500    vmnic_100600,vmnic_110600
+
+  PortGroup Name        VLAN ID  Used Ports  Uplinks
+  VM Network            0        1           vmnic_100600,vmnic_110600
+  Management Network    0        1           vmnic_100600,vmnic_110600
+
+Switch Name      Num Ports   Used Ports  Configured Ports  MTU     Uplinks
+cust_vSwitch1    2560        5           128               1500    vmnic_100601,vmnic_110601
+
+  PortGroup Name        VLAN ID  Used Ports  Uplinks
+  CustVM_PGrp           0        0           vmnic_100601,vmnic_110601
+
+
+Successfully created vswitch: cust_vSwitch1
+successfully created
+Cleaning of data disks and network creation completed ... Proceed with VM deployment
+Check if OVFTool already presented on appliance
+OVFtool already presented .. Skip installation
+
+create a mount point with share
+mount_VM_dir is /root/vmx_template_files//ESX-VMTemplates/ESX6
+check if VMstorage share is mounted
+Shares mounted in appliance is sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+devtmpfs on /dev type devtmpfs (rw,nosuid,size=1012868k,nr_inodes=253217,mode=755)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,mode=755)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_prio,net_cls)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpuacct,cpu)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+configfs on /sys/kernel/config type configfs (rw,relatime)
+/dev/sda3 on / type xfs (rw,relatime,attr2,inode64,noquota)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=25,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=17731)
+mqueue on /dev/mqueue type mqueue (rw,relatime)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+/dev/sda1 on /boot type xfs (rw,relatime,attr2,inode64,noquota)
+134.111.87.198:/VMstorage on /root/vmx_template_files type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.61.223,local_lock=none,addr=134.111.87.198)
+tmpfs on /run/user/0 type tmpfs (rw,nosuid,nodev,relatime,size=204744k,mode=700)
+
+file path mounted successfully
+getting all vm images
+mount_VM_dir and custom_images is /root/vmx_template_files//ESX-VMTemplates/ESX6 None
+Free space in datastore /vmfs/volumes/MPM1 is 584409088KB
+Free space in datastore /vmfs/volumes/MPM1 is 584409088KB
+vm_image_abs_path and datastore_abs_path is /root/vmx_template_files//ESX-VMTemplates/ESX6/Suse-12-v11-TPL /vmfs/volumes/MPM1
+Connect to host : 192.168.61.223
+with entered User Name root
+and with entered Password syseng
+Successfully connected to the host 192.168.61.223
+vm_image_path is /root/vmx_template_files//ESX-VMTemplates/ESX6/Suse-12-v11-TPL
+vmx_file_path is /root/vmx_template_files//ESX-VMTemplates/ESX6/Suse-12-v11-TPL/Suse-12-v11-TPL.vmx
+Deploying VM
+Last login: Fri Sep 11 18:20:25 2020 from nunna-b.invpn.stratus.com
+-v11-TPL/Suse-12-v11-TPL.vmx vi://root:syseng01\!@192.168.61.222tes/ESX6/Suse-12
+Opening VMX source: /root/vmx_template_files//ESX-VMTemplates/ESX6/Suse-12-v11-TPL/Suse-12-v11-TPL.vmx
+Opening VI target: vi://root@192.168.61.222:443/
+Deploying to VI: vi://root@192.168.61.222:443/
+
+Disk progress: 1%
+waiting for VM deployment
+Disk progress: 7%
+waiting for VM deployment
+Disk progress: 10%
+waiting for VM deployment
+Disk progress: 13%
+waiting for VM deployment
+Disk progress: 15%
+waiting for VM deployment
+Disk progress: 18%
+waiting for VM deployment
+Disk progress: 22%
+waiting for VM deployment
+Disk progress: 37%
+waiting for VM deployment
+Disk progress: 46%
+waiting for VM deployment
+Disk progress: 53%
+waiting for VM deployment
+Disk progress: 61%
+waiting for VM deployment
+Disk progress: 67%
+waiting for VM deployment
+Disk progress: 75%
+waiting for VM deployment
+Disk progress: 83%
+waiting for VM deployment
+Disk progress: 89%
+waiting for VM deployment
+Disk progress: 99%
+waiting for VM deployment
+Transfer Completed
+Powering on VM: Suse-12-v11-TPL70
+Task Completed
+Completed successfully
+[root@dhcp-192-168-61-223 ~]#
+VM deployed successfully
+vm deployment is successful
+Free space in datastore /vmfs/volumes/MPM1 is 533992448KB
+vm_image_abs_path and datastore_abs_path is /root/vmx_template_files//ESX-VMTemplates/ESX6/RHEL7.1-v11-TPL /vmfs/volumes/MPM1
+Connect to host : 192.168.61.223
+with entered User Name root
+and with entered Password syseng
+Successfully connected to the host 192.168.61.223
+vm_image_path is /root/vmx_template_files//ESX-VMTemplates/ESX6/RHEL7.1-v11-TPL
+vmx_file_path is /root/vmx_template_files//ESX-VMTemplates/ESX6/RHEL7.1-v11-TPL/RHEL7.1-v11-TPL.vmx
+Deploying VM
+Last login: Fri Sep 11 18:21:17 2020 from nunna-b.invpn.stratus.com
+-v11-TPL/RHEL7.1-v11-TPL.vmx vi://root:syseng01\!@192.168.61.222tes/ESX6/RHEL7.1
+Opening VMX source: /root/vmx_template_files//ESX-VMTemplates/ESX6/RHEL7.1-v11-TPL/RHEL7.1-v11-TPL.vmx
+Opening VI target: vi://root@192.168.61.222:443/
+Deploying to VI: vi://root@192.168.61.222:443/
+
+Disk progress: 1%
+waiting for VM deployment
+Disk progress: 13%
+waiting for VM deployment
+Disk progress: 18%
+waiting for VM deployment
+Disk progress: 23%
+waiting for VM deployment
+Disk progress: 33%
+waiting for VM deployment
+Disk progress: 37%
+waiting for VM deployment
+Disk progress: 42%
+waiting for VM deployment
+Disk progress: 47%
+waiting for VM deployment
+Disk progress: 51%
+waiting for VM deployment
+Disk progress: 54%
+waiting for VM deployment
+Disk progress: 58%
+waiting for VM deployment
+Disk progress: 62%
+waiting for VM deployment
+Disk progress: 67%
+waiting for VM deployment
+Disk progress: 72%
+waiting for VM deployment
+Disk progress: 78%
+waiting for VM deployment
+Disk progress: 82%
+waiting for VM deployment
+Disk progress: 88%
+waiting for VM deployment
+Disk progress: 97%
+waiting for VM deployment
+Transfer Completed
+Powering on VM: RHEL7.1-v11-TPL61
+Task Completed
+Completed successfully
+[root@dhcp-192-168-61-223 ~]#
+VM deployed successfully
+vm deployment is successful
+Free space in datastore /vmfs/volumes/MPM1 is 494057472KB
+Following vms are not deployed
+('W2K12-R2-2CPU-v11-TPL', '8')
+('CentOS-6.7-v11-TPL', '8')
+ignoring appliance datastore
+existing vms are [('23', 'MPM1', 'Suse-12-v11-TPL70/Suse-12-v11-TPL70.vmx'), ('24', 'MPM1', 'RHEL7.1-v11-TPL61/RHEL7.1-v11-TPL61.vmx')]
+New_deployed_vms are [('23', 'MPM1', 'Suse-12-v11-TPL70/Suse-12-v11-TPL70.vmx'), ('24', 'MPM1', 'RHEL7.1-v11-TPL61/RHEL7.1-v11-TPL61.vmx')]
+Ip address of VM Id 23 is 192.168.68.123
+Ip address of VM Id 24 is 192.168.69.10
+vm ip list is ['192.168.68.123', '192.168.69.10']
+Connect to host : 192.168.68.123
+with entered User Name root
+and with entered Password syseng
+Successfully connected to the host 192.168.68.123
+Editing of stressdeckfile is completed and stress deck file is stop_it -options "-t 994h" -user_count 1 -iterations 1
+
+# UPDATED: 7/28/2015 BY Mike D
+# LST Driver Deck  # This text helps ID deck type for automation.
+
+# Sample vm_stress.in for Linux VMs
+
+# This sample defaults to moderate load.
+
+# Monitor for CPU ACCESS DELAYs...
+timeit -options '' -user_count 1 -iterations 999
+
+# -------- CPU Stress --------
+# Default:  NOTE: Recommend using cpustress instead as recursive old and out dated!
+
+# recursive_64 -options '-d 20000 -i 1000000 -m -f -s 0 ' -user_count 1 -iterations 999
+# Lower/moderate CPU load...
+# recursive_64 -options '-d 2000 -i 10000 -m -f -s 0 ' -user_count 1 -iterations 999
+
+# New cpustress test for higher stress level if/when needed...
+cpustress_64 -options '-threads 40 -thread_sleep_time 4400 -run_time 60 '-user_count 1 -iterations 999
+
+# -------- Memory --------
+#memory_test_64 -options '-pct_of_memory 80 -iterations 1 -serial -sleep_time 1' -user_count 1 -iterations 999
+# Moderate level 64 bit...
+memory_test_64 -options '-pct_of_memory 100 -iterations 1 -serial -sleep_time 10' -user_count 1 -iterations 999
+
+# -------- Disk Test ---------
+disk_test_64 -options '-file_size 1000' -user_count 1 -iterations 999 -dir /home
+
+# -------- TCP Test --------
+
+# TCP 1  10.5.0.0 Common Test Network (CTN)
+# tcp_test_64 -options '-reply_to_each_packet -port_no 8000 -hostname 10.5.xx.xx -fixed_packet_size 5000 -number_of_packets 25000 -client_ip 10.5.xx.xx -number_of_clients 5 -sleep_time 5' -user_count 1 -iterations 999
+
+# TCP 2 Varying packets on the VM Test Net...
+# tcp_test_64 -options '-no_fixed_packet -varying_packet_size 7 -hostname 192.168.68.xx -number_of_clients 5 -client_ip 192.168.68.xx -port_no 8500' -user_count 1 -iterations 999
+
+# -------- FTP ---------
+#ftp_test  -options "-h 10.5.xx.xx -t 680 -u ftpclient -p ftpclient" -user_count 5 -iterations 999
+
+# -------- Apache --------
+#apache_pdf  -options "-h 134.111.xx.xx -t 900 " -user_count 2 -iterations 999
+
+current running process of stress deck file is root      2555  2374  0 14:56 ?        00:00:00 bash -x macros/run_test.sh cpustress_64 1 999 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2568  2555  0 14:56 ?        00:00:00 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2577  2568 24 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2578  2568 23 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2582  2568 29 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2584  2568 39 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2606  2568 60 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2636  2568 96 14:56 ?        00:00:00 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2637  2219  4 14:56 ?        00:00:00 bash -c ps -ef | grep stress
+root      2665  2637  0 14:56 ?        00:00:00 grep stress
+
+Connect to host : 192.168.69.10
+with entered User Name root
+and with entered Password syseng
+Successfully connected to the host 192.168.69.10
+Editing of stressdeckfile is completed and stress deck file is stop_it -options "-t 994h" -user_count 1 -iterations 1
+
+# UPDATED: 7/28/2015 BY Mike D
+# LST Driver Deck  # This text helps ID deck type for automation.
+
+# Sample vm_stress.in for Linux VMs
+
+# This sample defaults to moderate load.
+
+# Monitor for CPU ACCESS DELAYs...
+timeit -options '' -user_count 1 -iterations 999
+
+# -------- CPU Stress --------
+# Default:  NOTE: Recommend using cpustress instead as recursive old and out dated!
+
+# recursive_64 -options '-d 20000 -i 1000000 -m -f -s 0 ' -user_count 1 -iterations 999
+# Lower/moderate CPU load...
+# recursive_64 -options '-d 2000 -i 10000 -m -f -s 0 ' -user_count 1 -iterations 999
+
+# New cpustress test for higher stress level if/when needed...
+cpustress_64 -options '-threads 40 -thread_sleep_time 4400 -run_time 60 '-user_count 1 -iterations 999
+
+# -------- Memory --------
+#memory_test_64 -options '-pct_of_memory 80 -iterations 1 -serial -sleep_time 1' -user_count 1 -iterations 999
+# Moderate level 64 bit...
+memory_test_64 -options '-pct_of_memory 100 -iterations 1 -serial -sleep_time 10' -user_count 1 -iterations 999
+
+# -------- Disk Test ---------
+disk_test_64 -options '-file_size 1000' -user_count 1 -iterations 999 -dir /home
+
+# -------- TCP Test --------
+
+# TCP 1  10.5.0.0 Common Test Network (CTN)
+# tcp_test_64 -options '-reply_to_each_packet -port_no 8000 -hostname 10.5.xx.xx -fixed_packet_size 5000 -number_of_packets 25000 -client_ip 10.5.xx.xx -number_of_clients 5 -sleep_time 5' -user_count 1 -iterations 999
+
+# TCP 2 Varying packets on the VM Test Net...
+# tcp_test_64 -options '-no_fixed_packet -varying_packet_size 7 -hostname 192.168.68.xx -number_of_clients 5 -client_ip 192.168.68.xx -port_no 8500' -user_count 1 -iterations 999
+
+# -------- FTP ---------
+#ftp_test  -options "-h 10.5.xx.xx -t 680 -u ftpclient -p ftpclient" -user_count 5 -iterations 999
+
+# -------- Apache --------
+#apache_pdf  -options "-h 134.111.xx.xx -t 900 " -user_count 2 -iterations 999
+
+current running process of stress deck file is root      2865  2691  0 14:56 ?        00:00:00 bash -x macros/run_test.sh cpustress_64 1 999 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2886  2865  0 14:56 ?        00:00:00 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2888  2886 33 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2889  2886 22 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2890  2886 28 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2894  2886 37 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2918  2886 56 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2929  2886 99 14:56 ?        00:00:01 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2930  2886  0 14:56 ?        00:00:00 ./progs/cpustress_64 -threads 40 -thread_sleep_time 4400 -run_time 60
+root      2931  2592  0 14:56 ?        00:00:00 bash -c ps -ef | grep stress
+root      2940  2931  0 14:56 ?        00:00:00 grep stress
+
+
+C:\Users\bnunna\Desktop\Training keyinfo\esx_atomation>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
