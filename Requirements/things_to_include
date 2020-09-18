@@ -1,0 +1,8 @@
+Argument parser like -aul_upgrade -vib_install ..Module wise execution with arg passing  like only upgrade , install/uninstall etc for user convient as well it helps 
+      in quick code check
+all exceptions should cover without getting code error 
+common config file across platform
+common library for installation (by passing yes and password ) and download/upload file
+Eliminate hardcodings (like c folder etc) 
+Log should be created with logging info in user directory or common location. 
+    like /users/userid or arg parser can use  so that it will help in understanding the errors occured and include exceptions in code optimization
