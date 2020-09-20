@@ -310,7 +310,7 @@ def vib_install():
 
 def AUL_upgrade():
     logging.info("Checking Whether VIB installed in the system ..... ")
-    Check_vib = vm_obj.check_vib()
+    Check_vib = vm_obj.check_vib_uninstall()
     if Check_vib:
         logging.info("VIB not installed in the system so proceeding with AUL upgrade ")
     else:
